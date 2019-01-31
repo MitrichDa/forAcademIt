@@ -30,7 +30,7 @@ public class Range {
     }
 
     public boolean isInside(double x) {
-        return x > from && x < to;
+        return x >= from && x <= to;
     }
 
     private boolean isIntersect(Range range) {
