@@ -1,21 +1,38 @@
 package tk.dmitriikorenev.classes;
 
+import tk.dmitriikorenev.classes.comparators.exceptions.BadInputDataException;
+
 import java.util.Arrays;
 
 public class Triangle implements Shape {
+    private static final String MESSAGE = "Точки не составляют треугольник";
     private double x1;
-    private double x2;
-    private double x3;
     private double y1;
+    private double x2;
     private double y2;
+    private double x3;
     private double y3;
 
-    public Triangle(double x1, double x2, double x3, double y1, double y2, double y3) {
+    private double getSideLength(double x1, double y1, double x2, double y2) {
+        return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+    }
+
+    private boolean isTriangleNotValid(double x1, double y1, double x2, double y2, double x3, double y3) {
+        double a = getSideLength(x1, y1, x2, y2);
+        double b = getSideLength(x1, y1, x3, y3);
+        double c = getSideLength(x3, y3, x2, y2);
+        return Math.abs(a + b - c) < Shape.PRECISION_LIMIT || Math.abs(a - b + c) < Shape.PRECISION_LIMIT || Math.abs(-a + b + c) < Shape.PRECISION_LIMIT;
+    }
+
+    public Triangle(double x1, double y1, double x2, double y2, double x3, double y3) throws BadInputDataException {
+        if (isTriangleNotValid(x1, y1, x2, y2, x3, y3)) {
+            throw new BadInputDataException(MESSAGE);
+        }
         this.x1 = x1;
-        this.x2 = x2;
-        this.x3 = x3;
         this.y1 = y1;
+        this.x2 = x2;
         this.y2 = y2;
+        this.x3 = x3;
         this.y3 = y3;
     }
 
@@ -23,7 +40,10 @@ public class Triangle implements Shape {
         return x1;
     }
 
-    public void setX1(double x1) {
+    public void setX1(double x1) throws BadInputDataException {
+        if (isTriangleNotValid(x1, y1, x2, y2, x3, y3)) {
+            throw new BadInputDataException(MESSAGE);
+        }
         this.x1 = x1;
     }
 
@@ -31,7 +51,10 @@ public class Triangle implements Shape {
         return x2;
     }
 
-    public void setX2(double x2) {
+    public void setX2(double x2) throws BadInputDataException {
+        if (isTriangleNotValid(x1, y1, x2, y2, x3, y3)) {
+            throw new BadInputDataException(MESSAGE);
+        }
         this.x2 = x2;
     }
 
@@ -39,7 +62,10 @@ public class Triangle implements Shape {
         return x3;
     }
 
-    public void setX3(double x3) {
+    public void setX3(double x3) throws BadInputDataException {
+        if (isTriangleNotValid(x1, y1, x2, y2, x3, y3)) {
+            throw new BadInputDataException(MESSAGE);
+        }
         this.x3 = x3;
     }
 
@@ -47,7 +73,10 @@ public class Triangle implements Shape {
         return y1;
     }
 
-    public void setY1(double y1) {
+    public void setY1(double y1) throws BadInputDataException {
+        if (isTriangleNotValid(x1, y1, x2, y2, x3, y3)) {
+            throw new BadInputDataException(MESSAGE);
+        }
         this.y1 = y1;
     }
 
@@ -55,7 +84,10 @@ public class Triangle implements Shape {
         return y2;
     }
 
-    public void setY2(double y2) {
+    public void setY2(double y2) throws BadInputDataException {
+        if (isTriangleNotValid(x1, y1, x2, y2, x3, y3)) {
+            throw new BadInputDataException(MESSAGE);
+        }
         this.y2 = y2;
     }
 
@@ -63,7 +95,10 @@ public class Triangle implements Shape {
         return y3;
     }
 
-    public void setY3(double y3) {
+    public void setY3(double y3) throws BadInputDataException {
+        if (isTriangleNotValid(x1, y1, x2, y2, x3, y3)) {
+            throw new BadInputDataException(MESSAGE);
+        }
         this.y3 = y3;
     }
 
@@ -88,7 +123,7 @@ public class Triangle implements Shape {
 
     @Override
     public double getPerimeter() {
-        return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2)) + Math.sqrt(Math.pow(x3 - x2, 2) + Math.pow(y3 - y2, 2)) + Math.sqrt(Math.pow(x1 - x3, 2) + Math.pow(y1 - y3, 2));
+        return getSideLength(x1, y1, x2, y2) + getSideLength(x3, y3, x2, y2) + getSideLength(x1, y1, x3, y3);
     }
 
     @Override
@@ -102,8 +137,12 @@ public class Triangle implements Shape {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || o.getClass() != this.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || o.getClass() != this.getClass()) {
+            return false;
+        }
         Triangle triangle = (Triangle) o;
         return x1 == triangle.x1 &&
                 x2 == triangle.x2 &&

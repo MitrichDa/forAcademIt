@@ -1,9 +1,15 @@
 package tk.dmitriikorenev.classes;
 
+import tk.dmitriikorenev.classes.comparators.exceptions.BadInputDataException;
+
 public class Square implements Shape {
+    private static final String MESSAGE = "Сторона квадрата меньше или равен 0";
     private double side;
 
-    public Square(double side) {
+    public Square(double side) throws BadInputDataException {
+        if (side < Shape.PRECISION_LIMIT) {
+            throw new BadInputDataException(MESSAGE);
+        }
         this.side = side;
     }
 
@@ -11,7 +17,10 @@ public class Square implements Shape {
         return side;
     }
 
-    public void setSide(double side) {
+    public void setSide(double side) throws BadInputDataException {
+        if (side < Shape.PRECISION_LIMIT) {
+            throw new BadInputDataException(MESSAGE);
+        }
         this.side = side;
     }
 
@@ -44,8 +53,12 @@ public class Square implements Shape {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || o.getClass() != this.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || o.getClass() != this.getClass()) {
+            return false;
+        }
         Square square = (Square) o;
         return side == square.side;
     }

@@ -1,9 +1,15 @@
 package tk.dmitriikorenev.classes;
 
+import tk.dmitriikorenev.classes.comparators.exceptions.BadInputDataException;
+
 public class Circle implements Shape {
+    private static final String MESSAGE = "Радиус круга меньше или равен 0";
     private double radius;
 
-    public Circle(double radius) {
+    public Circle(double radius) throws BadInputDataException {
+        if (radius < Shape.PRECISION_LIMIT) {
+            throw new BadInputDataException(MESSAGE);
+        }
         this.radius = radius;
     }
 
@@ -11,7 +17,10 @@ public class Circle implements Shape {
         return radius;
     }
 
-    public void setRadius(double radius) {
+    public void setRadius(double radius) throws BadInputDataException {
+        if (radius < Shape.PRECISION_LIMIT) {
+            throw new BadInputDataException(MESSAGE);
+        }
         this.radius = radius;
     }
 
@@ -45,8 +54,12 @@ public class Circle implements Shape {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || o.getClass() != this.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || o.getClass() != this.getClass()) {
+            return false;
+        }
         Circle circle = (Circle) o;
         return radius == circle.radius;
     }
