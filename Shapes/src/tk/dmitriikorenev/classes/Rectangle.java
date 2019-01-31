@@ -44,4 +44,21 @@ public class Rectangle implements Shape {
                 "Площадь: " + getArea() + System.lineSeparator() +
                 "Периметр: " + getPerimeter();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || o.getClass() != this.getClass()) return false;
+        Rectangle rectangle = (Rectangle) o;
+        return width == rectangle.width && height == rectangle.height;
+    }
+
+    @Override
+    public int hashCode() {
+        int prime = 19;
+        int hash = 1;
+        hash = prime * hash + Double.hashCode(width);
+        hash = prime * hash + Double.hashCode(height);
+        return hash;
+    }
 }

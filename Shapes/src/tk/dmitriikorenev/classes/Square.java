@@ -41,4 +41,17 @@ public class Square implements Shape {
                 "Площадь: " + getArea() + System.lineSeparator() +
                 "Периметр: " + getPerimeter();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || o.getClass() != this.getClass()) return false;
+        Square square = (Square) o;
+        return side == square.side;
+    }
+
+    @Override
+    public int hashCode() {
+        return Double.hashCode(side);
+    }
 }

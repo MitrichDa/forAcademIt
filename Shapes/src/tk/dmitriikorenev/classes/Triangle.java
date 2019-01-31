@@ -51,4 +51,30 @@ public class Triangle implements Shape {
                 "Площадь: " + getArea() + System.lineSeparator() +
                 "Периметр: " + getPerimeter();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || o.getClass() != this.getClass()) return false;
+        Triangle triangle = (Triangle) o;
+        return x1 == triangle.x1 &&
+                x2 == triangle.x2 &&
+                x3 == triangle.x3 &&
+                y1 == triangle.y1 &&
+                y2 == triangle.y2 &&
+                y3 == triangle.y3;
+    }
+
+    @Override
+    public int hashCode() {
+        int prime = 19;
+        int hash = 1;
+        hash = prime * hash + Double.hashCode(x1);
+        hash = prime * hash + Double.hashCode(x2);
+        hash = prime * hash + Double.hashCode(x3);
+        hash = prime * hash + Double.hashCode(y1);
+        hash = prime * hash + Double.hashCode(y2);
+        hash = prime * hash + Double.hashCode(y3);
+        return hash;
+    }
 }

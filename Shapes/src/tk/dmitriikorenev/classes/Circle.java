@@ -42,4 +42,17 @@ public class Circle implements Shape {
                 "Площадь: " + getArea() + System.lineSeparator() +
                 "Длина окружности: " + getPerimeter();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || o.getClass() != this.getClass()) return false;
+        Circle circle = (Circle) o;
+        return radius == circle.radius;
+    }
+
+    @Override
+    public int hashCode() {
+        return Double.hashCode(radius);
+    }
 }
