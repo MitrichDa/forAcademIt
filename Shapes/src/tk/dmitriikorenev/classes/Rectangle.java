@@ -1,6 +1,6 @@
 package tk.dmitriikorenev.classes;
 
-import tk.dmitriikorenev.classes.comparators.exceptions.BadInputDataException;
+import tk.dmitriikorenev.classes.exceptions.BadInputDataException;
 
 public class Rectangle implements Shape {
     private static final String MESSAGE = "Сторона прямоугольника меньше или равна 0";
@@ -8,7 +8,7 @@ public class Rectangle implements Shape {
     private double height;
 
     public Rectangle(double width, double height) throws BadInputDataException {
-        if (width < Shape.PRECISION_LIMIT || height < 0) {
+        if (width < Shape.PRECISION_LIMIT || height < Shape.PRECISION_LIMIT) {
             throw new BadInputDataException(MESSAGE);
         }
         this.width = width;

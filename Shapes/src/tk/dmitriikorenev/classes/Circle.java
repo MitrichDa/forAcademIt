@@ -1,6 +1,6 @@
 package tk.dmitriikorenev.classes;
 
-import tk.dmitriikorenev.classes.comparators.exceptions.BadInputDataException;
+import tk.dmitriikorenev.classes.exceptions.BadInputDataException;
 
 public class Circle implements Shape {
     private static final String MESSAGE = "Радиус круга меньше или равен 0";

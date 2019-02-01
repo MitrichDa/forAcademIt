@@ -1,6 +1,6 @@
 package tk.dmitriikorenev.classes;
 
-import tk.dmitriikorenev.classes.comparators.exceptions.BadInputDataException;
+import tk.dmitriikorenev.classes.exceptions.BadInputDataException;
 
 import java.util.Arrays;
 
@@ -13,11 +13,11 @@ public class Triangle implements Shape {
     private double x3;
     private double y3;
 
-    private double getSideLength(double x1, double y1, double x2, double y2) {
+    private static double getSideLength(double x1, double y1, double x2, double y2) {
         return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
     }
 
-    private boolean isTriangleNotValid(double x1, double y1, double x2, double y2, double x3, double y3) {
+    private static boolean isTriangleNotValid(double x1, double y1, double x2, double y2, double x3, double y3) {
         double a = getSideLength(x1, y1, x2, y2);
         double b = getSideLength(x1, y1, x3, y3);
         double c = getSideLength(x3, y3, x2, y2);
@@ -111,9 +111,9 @@ public class Triangle implements Shape {
 
     @Override
     public double getHeight() {
-        double[] xCoordinates = new double[]{y1, y2, y3};
-        Arrays.sort(xCoordinates);
-        return xCoordinates[2] - xCoordinates[0];
+        double[] yCoordinates = new double[]{y1, y2, y3};
+        Arrays.sort(yCoordinates);
+        return yCoordinates[2] - yCoordinates[0];
     }
 
     @Override

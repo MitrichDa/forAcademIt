@@ -3,7 +3,7 @@ package tk.dmitriikorenev.main;
 import tk.dmitriikorenev.classes.*;
 import tk.dmitriikorenev.classes.comparators.ShapeAreaComparator;
 import tk.dmitriikorenev.classes.comparators.ShapePerimeterComparator;
-import tk.dmitriikorenev.classes.comparators.exceptions.BadInputDataException;
+import tk.dmitriikorenev.classes.exceptions.BadInputDataException;
 
 import java.util.Arrays;
 

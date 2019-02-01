@@ -1,4 +1,4 @@
-package tk.dmitriikorenev.classes.comparators.exceptions;
+package tk.dmitriikorenev.classes.exceptions;
 
 public class BadInputDataException extends Exception {
     public BadInputDataException(String message) {

@@ -1,6 +1,6 @@
 package tk.dmitriikorenev.classes;
 
-import tk.dmitriikorenev.classes.comparators.exceptions.BadInputDataException;
+import tk.dmitriikorenev.classes.exceptions.BadInputDataException;
 
 public class Square implements Shape {
     private static final String MESSAGE = "Сторона квадрата меньше или равен 0";
