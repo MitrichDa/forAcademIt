@@ -1,13 +1,14 @@
 package tk.dmitriikorenev.classes;
 
 import java.util.Arrays;
+import java.util.StringJoiner;
 
 public class Vector {
     private double[] coordinates;
 
-    public Vector(int n) throws IllegalArgumentException {
+    public Vector(int n) {
         if (n <= 0) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Number of coordinates in vector must be > 0");
         }
         this.coordinates = new double[n];
     }
@@ -22,7 +23,7 @@ public class Vector {
 
     public Vector(int n, double[] coordinates) {
         if (n <= 0) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Number of coordinates in vector must be > 0");
         }
         this.coordinates = Arrays.copyOf(coordinates, n);
     }
@@ -32,14 +33,14 @@ public class Vector {
     }
 
     public void addVector(Vector vector) {
-        int newSize = Math.max(this.coordinates.length, vector.coordinates.length);
-        double[] sum = new double[newSize];
-        for (int i = 0; i < newSize; i++) {
-            double temp1 = i >= this.coordinates.length ? 0 : this.coordinates[i];
-            double temp2 = i >= vector.coordinates.length ? 0 : vector.coordinates[i];
-            sum[i] = temp1 + temp2;
+        int maxSize = Math.max(this.coordinates.length, vector.coordinates.length);
+        if (this.coordinates.length < vector.coordinates.length) {
+            this.coordinates = Arrays.copyOf(this.coordinates, maxSize);
         }
-        this.coordinates = sum;
+        for (int i = 0; i < maxSize; i++) {
+            double temp2 = i >= vector.coordinates.length ? 0 : vector.coordinates[i];
+            this.coordinates[i] += temp2;
+        }
     }
 
     public void rotate() {
@@ -53,9 +54,14 @@ public class Vector {
     }
 
     public void subtractVector(Vector vector) {
-        Vector negativeVector = new Vector(vector);
-        negativeVector.rotate();
-        this.addVector(negativeVector);
+        int maxSize = Math.max(this.coordinates.length, vector.coordinates.length);
+        if (this.coordinates.length < vector.coordinates.length) {
+            this.coordinates = Arrays.copyOf(this.coordinates, maxSize);
+        }
+        for (int i = 0; i < maxSize; i++) {
+            double temp2 = i >= vector.coordinates.length ? 0 : vector.coordinates[i];
+            this.coordinates[i] -= temp2;
+        }
     }
 
     public double getLength() {
@@ -66,16 +72,16 @@ public class Vector {
         return Math.sqrt(lengthSquare);
     }
 
-    public double getCoordinateByIndex(int n) throws IllegalArgumentException {
+    public double getCoordinateByIndex(int n) {
         if (n >= coordinates.length || n < 0) {
-            throw new IllegalArgumentException();
+            throw new IndexOutOfBoundsException("This vector don`t have index " + n);
         }
         return coordinates[n];
     }
 
-    public void setCoordinateByIndex(int n, double value) throws IllegalArgumentException {
+    public void setCoordinateByIndex(int n, double value) {
         if (n >= coordinates.length || n < 0) {
-            throw new IllegalArgumentException();
+            throw new IndexOutOfBoundsException("This vector don`t have index " + n);
         }
         coordinates[n] = value;
     }
@@ -120,15 +126,10 @@ public class Vector {
 
     @Override
     public String toString() {
-        if (coordinates.length == 0)
-            return "{}";
-        StringBuilder builder = new StringBuilder();
-        builder.append('{');
-        for (int i = 0; ; i++) {
-            builder.append(coordinates[i]);
-            if (i == coordinates.length - 1)
-                return builder.append('}').toString();
-            builder.append(", ");
+        StringJoiner stringJoiner = new StringJoiner(", ", "{", "}");
+        for (double coordinate : coordinates) {
+            stringJoiner.add(Double.toString(coordinate));
         }
+        return stringJoiner.toString();
     }
 }

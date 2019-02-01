@@ -3,7 +3,7 @@ package tk.dmitriikorenev.main;
 import tk.dmitriikorenev.classes.Vector;
 
 public class Main {
-    public static void main(String[] args) throws IllegalArgumentException {
+    public static void main(String[] args) {
         Vector vector1 = new Vector(new double[]{1, 2, 3});
         Vector vector2 = new Vector(8);
         Vector vector3 = new Vector(5, new double[]{1, 1, 1});
@@ -21,7 +21,7 @@ public class Main {
             vector6 = new Vector(0);
             System.out.println(vector6);
         } catch (IllegalArgumentException e) {
-            System.out.println("Ошибка при создании вектора.");
+            System.out.println("Error: " + e.getMessage());
         }
         System.out.println();
 
@@ -60,8 +60,8 @@ public class Main {
             System.out.println("Заменим это значение на " + value);
             vector1.setCoordinateByIndex(index, value);
             System.out.println("Вектор теперь: " + vector1);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Нет такой координаты");
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
 }
