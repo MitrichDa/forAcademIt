@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) {
         Vector vector1 = new Vector(new double[]{1, 2, 3});
         Vector vector2 = new Vector(8);
-        Vector vector3 = new Vector(5, new double[]{1, 1, 1});
+        Vector vector3 = new Vector(5, new double[]{1, 1, 1, 3});
         Vector vector4 = new Vector(2, new double[]{1, 2, 3});
         Vector vector5 = new Vector(vector1);
 

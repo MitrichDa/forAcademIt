@@ -33,13 +33,12 @@ public class Vector {
     }
 
     public void addVector(Vector vector) {
-        int maxSize = Math.max(this.coordinates.length, vector.coordinates.length);
-        if (this.coordinates.length < vector.coordinates.length) {
-            this.coordinates = Arrays.copyOf(this.coordinates, maxSize);
+        int secondVectorSize = vector.coordinates.length;
+        if (this.coordinates.length < secondVectorSize) {
+            this.coordinates = Arrays.copyOf(this.coordinates, secondVectorSize);
         }
-        for (int i = 0; i < maxSize; i++) {
-            double temp2 = i >= vector.coordinates.length ? 0 : vector.coordinates[i];
-            this.coordinates[i] += temp2;
+        for (int i = 0; i < secondVectorSize; i++) {
+            this.coordinates[i] += vector.coordinates[i];
         }
     }
 
@@ -54,13 +53,12 @@ public class Vector {
     }
 
     public void subtractVector(Vector vector) {
-        int maxSize = Math.max(this.coordinates.length, vector.coordinates.length);
-        if (this.coordinates.length < vector.coordinates.length) {
-            this.coordinates = Arrays.copyOf(this.coordinates, maxSize);
+        int secondVectorSize = vector.coordinates.length;
+        if (this.coordinates.length < secondVectorSize) {
+            this.coordinates = Arrays.copyOf(this.coordinates, secondVectorSize);
         }
-        for (int i = 0; i < maxSize; i++) {
-            double temp2 = i >= vector.coordinates.length ? 0 : vector.coordinates[i];
-            this.coordinates[i] -= temp2;
+        for (int i = 0; i < secondVectorSize; i++) {
+            this.coordinates[i] -= vector.coordinates[i];
         }
     }
 
