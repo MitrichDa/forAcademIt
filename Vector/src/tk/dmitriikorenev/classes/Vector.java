@@ -28,6 +28,13 @@ public class Vector {
         this.coordinates = Arrays.copyOf(coordinates, n);
     }
 
+    public Vector(int n, Vector vector) {
+        if (n <= 0) {
+            throw new IllegalArgumentException("Number of coordinates in vector must be > 0");
+        }
+        this.coordinates = Arrays.copyOf(vector.coordinates, n);
+    }
+
     public int getSize() {
         return coordinates.length;
     }
