@@ -2,10 +2,9 @@ package tk.dmitriikorenev.main;
 
 import tk.dmitriikorenev.classes.Matrix;
 import tk.dmitriikorenev.classes.Vector;
-import tk.dmitriikorenev.classes.exceptions.WrongMatrixSizeException;
 
 public class Main {
-    public static void main(String[] args) throws WrongMatrixSizeException {
+    public static void main(String[] args) {
         double[][] doubleArray = new double[][]{{32, 2, 1}, {1, 2, 25}, {2, 4, 5}};
         Matrix matrix1 = new Matrix(doubleArray);
         Vector[] vectorArray = new Vector[]{new Vector(new double[]{1, 2, 3, 4}), new Vector(new double[]{1, 2, 3, 4}), new Vector(new double[]{-3, 23, 3, 4})};

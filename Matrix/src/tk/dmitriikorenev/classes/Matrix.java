@@ -79,7 +79,7 @@ public class Matrix {
         return new Vector(rows[index]);
     }
 
-    public void setRowByIndex(int index, Vector row) throws WrongMatrixSizeException {
+    public void setRowByIndex(int index, Vector row) {
         if (index >= rows.length || index < 0) {
             throw new IndexOutOfBoundsException("This matrix don`t have row with index " + index);
         }
@@ -113,7 +113,7 @@ public class Matrix {
         }
     }
 
-    public double getDeterminant() throws WrongMatrixSizeException {
+    public double getDeterminant() {
         if (rows.length != getColumnsCount()) {
             throw new WrongMatrixSizeException("Matrix must be square to have determinant");
         }
@@ -154,7 +154,7 @@ public class Matrix {
         return determinant;
     }
 
-    public Vector multiplyByVector(Vector vector) throws WrongMatrixSizeException {
+    public Vector multiplyByVector(Vector vector) {
         int vectorLength = vector.getSize();
         int matrixColumnLength = this.rows.length;
         if (vectorLength != this.getColumnsCount()) {
@@ -168,7 +168,7 @@ public class Matrix {
         return new Vector(array);
     }
 
-    public void addMatrix(Matrix matrix) throws WrongMatrixSizeException {
+    public void addMatrix(Matrix matrix) {
         if (this.rows.length != matrix.rows.length || this.getColumnsCount() != matrix.getColumnsCount()) {
             throw new WrongMatrixSizeException("Matrices sizes must match");
         }
@@ -178,7 +178,7 @@ public class Matrix {
         }
     }
 
-    public static Matrix getSum(Matrix matrix1, Matrix matrix2) throws WrongMatrixSizeException {
+    public static Matrix getSum(Matrix matrix1, Matrix matrix2) {
         if (matrix1.rows.length != matrix2.rows.length || matrix1.getColumnsCount() != matrix2.getColumnsCount()) {
             throw new WrongMatrixSizeException("Matrices sizes must match");
         }
@@ -188,7 +188,7 @@ public class Matrix {
         return result;
     }
 
-    public static Matrix getDifference(Matrix matrix1, Matrix matrix2) throws WrongMatrixSizeException {
+    public static Matrix getDifference(Matrix matrix1, Matrix matrix2) {
         if (matrix1.rows.length != matrix2.rows.length || matrix1.getColumnsCount() != matrix2.getColumnsCount()) {
             throw new WrongMatrixSizeException("Matrices sizes must match");
         }
@@ -198,7 +198,7 @@ public class Matrix {
         return result;
     }
 
-    public void subtractMatrix(Matrix matrix) throws WrongMatrixSizeException {
+    public void subtractMatrix(Matrix matrix) {
         if (this.rows.length != matrix.rows.length || this.getColumnsCount() != matrix.getColumnsCount()) {
             throw new WrongMatrixSizeException("Matrices sizes must match");
         }
@@ -208,7 +208,7 @@ public class Matrix {
         }
     }
 
-    public static Matrix multiplyByMatrix(Matrix matrix1, Matrix matrix2) throws WrongMatrixSizeException {
+    public static Matrix multiplyByMatrix(Matrix matrix1, Matrix matrix2) {
         if (matrix2.rows.length != matrix1.getColumnsCount()) {
             throw new WrongMatrixSizeException("matrix1 row size must match matrix2 column size");
         }
