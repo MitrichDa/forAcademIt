@@ -3,10 +3,7 @@ package tk.dmitriikorenev.main;
 import tk.dmitriikorenev.classes.CSVReader;
 import tk.dmitriikorenev.classes.HTMLWriter;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 
 public class CsvToHtml {
@@ -22,14 +19,19 @@ public class CsvToHtml {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(args[0]));
              PrintWriter writer = new PrintWriter(args[1])) {
-            ArrayList<String[]> lines = CSVReader.readAllLines(reader);
+            CSVReader csvReader = new CSVReader(reader);
+            ArrayList<String[]> lines = csvReader.readAllLines();
             if (lines == null || lines.size() == 0) {
                 System.out.println("Ошибка при чтении файла, проверьте корректность данных в исходном файле.");
                 return;
             }
-            HTMLWriter.writeDocument(lines, writer, args[1]);
+
+            HTMLWriter htmlWriter = new HTMLWriter(writer);
+            htmlWriter.writeDocument(lines, args[1]);
+        } catch (FileNotFoundException e) {
+            System.out.println("Файл " + "\"" + args[0] + "\" не найден.");
         } catch (IOException e) {
-            System.out.println("Ошибка чтения/записи.");
+            System.out.println("Неизвестная ошибка чтения/записи.");
         }
     }
 }

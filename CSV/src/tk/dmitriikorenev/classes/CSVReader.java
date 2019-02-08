@@ -5,6 +5,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class CSVReader {
+    private BufferedReader reader;
+
+    public CSVReader(BufferedReader reader) {
+        this.reader = reader;
+    }
+
     private static String[] readLine(BufferedReader reader) throws IOException {
         boolean isQuoteOpen = false;
         boolean isCellStart = true;
@@ -58,7 +64,7 @@ public class CSVReader {
         return cells.toArray(new String[0]);
     }
 
-    public static ArrayList<String[]> readAllLines(BufferedReader reader) throws IOException {
+    public ArrayList<String[]> readAllLines() throws IOException {
         ArrayList<String[]> lines = new ArrayList<>();
         int rowSize = 0;
         while (reader.ready()) {

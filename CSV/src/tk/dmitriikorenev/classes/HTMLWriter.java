@@ -20,6 +20,12 @@ public class HTMLWriter {
     private static final String LESSER_SYMBOL = "&lt;";
     private static final String AMPERSAND_SYMBOL = "&amp;";
 
+    private PrintWriter writer;
+
+    public HTMLWriter(PrintWriter writer) {
+        this.writer = writer;
+    }
+
     private static void writeTableLine(String[] cells, PrintWriter writer) {
         writer.write(STRING_TAG[OPEN_TAG]);
         for (String e : cells) {
@@ -34,7 +40,7 @@ public class HTMLWriter {
         writer.write(STRING_TAG[CLOSE_TAG]);
     }
 
-    public static void writeDocument(ArrayList<String[]> lines, PrintWriter writer, String title) {
+    public void writeDocument(ArrayList<String[]> lines, String title) {
         writer.write(DOCTYPE);
         writer.write(HTML_TAG[OPEN_TAG]);
         writer.write(HEAD_TAG[OPEN_TAG]);
