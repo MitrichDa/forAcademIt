@@ -26,7 +26,7 @@ public class HTMLWriter {
         this.writer = writer;
     }
 
-    private static void writeTableLine(String[] cells, PrintWriter writer) {
+    private void writeTableLine(String[] cells) {
         writer.write(STRING_TAG[OPEN_TAG]);
         for (String e : cells) {
             e = e.replaceAll("&", AMPERSAND_SYMBOL);
@@ -52,7 +52,7 @@ public class HTMLWriter {
         writer.write(BODY_TAG[OPEN_TAG]);
         writer.write(TABLE_TAG[OPEN_TAG]);
 
-        lines.forEach(line -> writeTableLine(line, writer));
+        lines.forEach(this::writeTableLine);
 
         writer.write(TABLE_TAG[CLOSE_TAG]);
         writer.write(BODY_TAG[CLOSE_TAG]);

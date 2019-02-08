@@ -11,7 +11,7 @@ public class CSVReader {
         this.reader = reader;
     }
 
-    private static String[] readLine(BufferedReader reader) throws IOException {
+    private String[] readLine() throws IOException {
         boolean isQuoteOpen = false;
         boolean isCellStart = true;
         ArrayList<String> cells = new ArrayList<>();
@@ -68,7 +68,7 @@ public class CSVReader {
         ArrayList<String[]> lines = new ArrayList<>();
         int rowSize = 0;
         while (reader.ready()) {
-            String[] cells = CSVReader.readLine(reader);
+            String[] cells = readLine();
             if (cells == null || (cells.length != rowSize && rowSize != 0 && cells.length != 0)) {
                 return null;
             } else {
