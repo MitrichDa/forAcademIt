@@ -2,8 +2,8 @@ package tk.dmitriikorenev.classes;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ArrayListHomeUtil {
     public static void readToList(BufferedReader reader, List<String> list) throws IOException {
@@ -13,10 +13,21 @@ public class ArrayListHomeUtil {
     }
 
     public static void deleteEvenNumbersFromList(List<Integer> list) {
-        list.removeIf(x -> x % 2 == 0);
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i) % 2 == 0) {
+                list.remove(i);
+                --i;
+            }
+        }
     }
 
     public static List<Integer> copyUniqueNumbers(List<Integer> list) {
-        return list.stream().distinct().collect(Collectors.toList());
+        List<Integer> result = new ArrayList<>();
+        for (Integer element : list) {
+            if (!result.contains(element)) {
+                result.add(element);
+            }
+        }
+        return result;
     }
 }

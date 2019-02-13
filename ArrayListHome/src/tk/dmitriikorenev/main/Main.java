@@ -17,10 +17,10 @@ public class Main {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             ArrayListHomeUtil.readToList(reader, listFromFile);
         } catch (FileNotFoundException e) {
-            System.out.println("File " + "\"" + filePath + "\"" + " not found. Check file path.");
+            System.out.println("File \"" + filePath + "\" not found. Check file path.");
             return;
         } catch (IOException e) {
-            System.out.println("Can not read from file " + "\"" + filePath + "\"");
+            System.out.println("Can not read from file \"" + filePath + "\"");
             return;
         }
 
