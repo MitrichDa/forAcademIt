@@ -1,6 +1,7 @@
 package tk.dmitriikorenev.listclasses;
 
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public class MyLinkedList<T> {
     private ListNode<T> head;
@@ -87,33 +88,17 @@ public class MyLinkedList<T> {
     }
 
     public boolean remove(T value) {
-        if (value == null) {
-            if (head.getValue() == null) {
-                head = head.getNextElement();
+        if (Objects.equals(head.getValue(), value)) {
+            head = head.getNextElement();
+            --size;
+            return true;
+        }
+
+        for (ListNode<T> node = head.getNextElement(), prev = head; node != null; prev = node, node = node.getNextElement()) {
+            if (Objects.equals(node.getValue(), value)) {
+                prev.setNextElement(node.getNextElement());
                 --size;
                 return true;
-            }
-
-            for (ListNode<T> node = head.getNextElement(), prev = head; node != null; prev = node, node = node.getNextElement()) {
-                if (node.getValue() == null) {
-                    prev.setNextElement(node.getNextElement());
-                    --size;
-                    return true;
-                }
-            }
-        } else {
-            if (head.getValue().equals(value)) {
-                head = head.getNextElement();
-                --size;
-                return true;
-            }
-
-            for (ListNode<T> node = head.getNextElement(), prev = head; node != null; prev = node, node = node.getNextElement()) {
-                if (node.getValue().equals(value)) {
-                    prev.setNextElement(node.getNextElement());
-                    --size;
-                    return true;
-                }
             }
         }
         return false;
