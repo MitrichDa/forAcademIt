@@ -14,11 +14,14 @@ public class MyLinkedList<T> {
     }
 
     public T getFirst() {
+        if (size == 0) {
+            throw new NoSuchElementException("This list is empty");
+        }
         return head.getValue();
     }
 
     private ListNode<T> getElement(int index) {
-        if (index >= size) {
+        if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException("This list does not have index " + index);
         }
 
@@ -42,7 +45,7 @@ public class MyLinkedList<T> {
     }
 
     public T remove(int index) {
-        if (index >= size) {
+        if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException("This list does not have index " + index);
         }
 
@@ -84,17 +87,33 @@ public class MyLinkedList<T> {
     }
 
     public boolean remove(T value) {
-        if (head.getValue().equals(value)) {
-            head = head.getNextElement();
-            --size;
-            return true;
-        }
-
-        for (ListNode<T> node = head.getNextElement(), prev = head; node != null; prev = node, node = node.getNextElement()) {
-            if (node.getValue().equals(value)) {
-                prev.setNextElement(node.getNextElement());
+        if (value == null) {
+            if (head.getValue() == null) {
+                head = head.getNextElement();
                 --size;
                 return true;
+            }
+
+            for (ListNode<T> node = head.getNextElement(), prev = head; node != null; prev = node, node = node.getNextElement()) {
+                if (node.getValue() == null) {
+                    prev.setNextElement(node.getNextElement());
+                    --size;
+                    return true;
+                }
+            }
+        } else {
+            if (head.getValue().equals(value)) {
+                head = head.getNextElement();
+                --size;
+                return true;
+            }
+
+            for (ListNode<T> node = head.getNextElement(), prev = head; node != null; prev = node, node = node.getNextElement()) {
+                if (node.getValue().equals(value)) {
+                    prev.setNextElement(node.getNextElement());
+                    --size;
+                    return true;
+                }
             }
         }
         return false;
@@ -111,7 +130,7 @@ public class MyLinkedList<T> {
         return value;
     }
 
-    public void reverseList() {
+    public void reverse() {
         if (size < 2) {
             return;
         }
@@ -131,12 +150,18 @@ public class MyLinkedList<T> {
         head = previousNode;
     }
 
-    public MyLinkedList<T> copyList() {
+    public MyLinkedList<T> copy() {
         MyLinkedList<T> listCopy = new MyLinkedList<>();
-        int i = 0;
-        for (ListNode<T> node = head; node != null; node = node.getNextElement()) {
-            listCopy.add(i, node.getValue());
-            ++i;
+        if (size == 0) {
+            return listCopy;
+        }
+
+        listCopy.size = size;
+        ListNode<T> nodeCopy = new ListNode<>(head.getValue());
+        listCopy.head = nodeCopy;
+        for (ListNode<T> node = head.getNextElement(); node != null; node = node.getNextElement()) {
+            nodeCopy.setNextElement(new ListNode<>(node.getValue()));
+            nodeCopy = nodeCopy.getNextElement();
         }
         return listCopy;
     }

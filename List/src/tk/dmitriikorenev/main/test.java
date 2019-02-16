@@ -41,8 +41,8 @@ public class test {
         linkedList.addToBeginning("Номер 1");
 
         System.out.println();
-        MyLinkedList<String> copy = linkedList.copyList();
-        linkedList.reverseList();
+        MyLinkedList<String> copy = linkedList.copy();
+        linkedList.reverse();
         for (int i = 0; i < linkedList.getSize(); i++) {
             System.out.println(linkedList.get(i));
         }
