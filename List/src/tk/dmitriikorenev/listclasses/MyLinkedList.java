@@ -88,6 +88,10 @@ public class MyLinkedList<T> {
     }
 
     public boolean remove(T value) {
+        if (size == 0) {
+            return false;
+        }
+
         if (Objects.equals(head.getValue(), value)) {
             head = head.getNextElement();
             --size;
