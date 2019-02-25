@@ -14,15 +14,30 @@ public class MyArrayListTest {
         List<Integer> numbers2 = new ArrayList<>(Arrays.asList(integers2));
         System.out.println(numbers.contains(3));
         System.out.println(numbers.contains(6));
-        System.out.println(numbers.containsAll(numbers2));
         numbers.addAll(1, numbers2);
-        numbers.add(1, 8);
+        System.out.println(numbers.containsAll(numbers2));
         numbers.retainAll(numbers2);
         System.out.println(numbers.lastIndexOf(8));
-        Integer[] array = numbers.toArray(new Integer[0]);
-
-        for (Object e : array) {
+        System.out.println("size " + numbers.size());
+        numbers.remove(Integer.valueOf(8));
+        System.out.println("size " + numbers.size());
+        for (Object e : numbers) {
             System.out.println(e);
         }
+
+        List<String> strings = new ArrayList<>();
+        strings.add("a");
+        strings.add("b");
+        strings.add("c");
+        strings.add("d");
+        MyArrayList<String> strings2 = new MyArrayList<>(strings);
+        strings2.add("1");
+        System.out.println(strings2);
+        strings2.ensureCapacity(20);
+        System.out.println(strings2.addAll(strings));
+        System.out.println(strings2);
+        System.out.println(strings2.removeAll(strings));
+        strings2.trimToSize();
+        System.out.println(strings2);
     }
 }
