@@ -113,7 +113,7 @@ public class MyArrayList<E> implements List<E> {
         checkIndexForAdd(index);
         int collectionSize = c.size();
         if (collectionSize == 0) {
-            return true;
+            return false;
         } else {
             ++modCount;
         }
@@ -175,8 +175,8 @@ public class MyArrayList<E> implements List<E> {
 
     @Override
     public void add(int index, E element) {
-        ++modCount;
         checkIndexForAdd(index);
+        ++modCount;
         ensureCapacity(size);
         if (index != size) {
             System.arraycopy(items, index, items, index + 1, size - index);
@@ -246,7 +246,7 @@ public class MyArrayList<E> implements List<E> {
 
         @Override
         public E next() {
-            if (currentIndex + 1 >= size) {
+            if (!hasNext()) {
                 throw new NoSuchElementException("No more elements in this list.");
             }
             if (iteratorModCount != modCount) {
@@ -286,7 +286,7 @@ public class MyArrayList<E> implements List<E> {
 
     @Override
     public String toString() {
-        StringJoiner joiner = new StringJoiner(",", "[", "]");
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
         for (int i = 0; i < size; i++) {
             joiner.add(items[i].toString());
         }
