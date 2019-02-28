@@ -15,10 +15,18 @@ public class Main {
         System.out.println(myHashTable);
         System.out.println(myHashTable.add(123));
         System.out.println(myHashTable);
-        myHashTable.removeAll(list);
-        System.out.println(myHashTable);
+        myHashTable.retainAll(list);
+        System.out.println(" " + myHashTable);
         myHashTable.addAll(list);
         myHashTable.retainAll(list);
+        System.out.println("  " + myHashTable);
+        myHashTable.add(null);
+        list = Arrays.asList(null, 1, 2, 3, 4);
+        System.out.println("list" + list);
+        System.out.println("hash table" + myHashTable);
+        //list = new LinkedList<>();
+        myHashTable.retainAll(list);
+        //myHashTable.removeAll(list);
         System.out.println(myHashTable);
     }
 }
