@@ -40,7 +40,7 @@ public class MyHashTable<E> implements Collection<E> {
     }
 
     private int getIndex(Object o) {
-        return o == null ? 0 : Math.abs(o.hashCode() % (itemLists.length - 1)) + 1;
+        return o == null ? 0 : Math.abs(o.hashCode() % itemLists.length);
     }
 
     @SuppressWarnings("unchecked")
@@ -48,7 +48,7 @@ public class MyHashTable<E> implements Collection<E> {
         int newLength = itemLists.length * 2;
         LinkedList<E>[] newItemLists = (LinkedList<E>[]) new LinkedList[newLength];
         for (E element : this) {
-            int index = element == null ? 0 : Math.abs(element.hashCode() % (newLength - 1)) + 1;
+            int index = element == null ? 0 : Math.abs(element.hashCode() % newLength);
             if (newItemLists[index] == null) {
                 newItemLists[index] = new LinkedList<>();
             }
@@ -179,7 +179,7 @@ public class MyHashTable<E> implements Collection<E> {
             }
         }
 
-        return oldModCount == modCount;
+        return oldModCount != modCount;
     }
 
     @Override
@@ -192,7 +192,7 @@ public class MyHashTable<E> implements Collection<E> {
             }
         }
 
-        return oldModCount == modCount;
+        return oldModCount != modCount;
     }
 
     @Override
@@ -262,8 +262,7 @@ public class MyHashTable<E> implements Collection<E> {
     public String toString() {
         StringJoiner joiner = new StringJoiner(", ", "[", "]");
         for (E element : this) {
-            String stringToAdd = element == null ? null : element.toString();
-            joiner.add(stringToAdd);
+            joiner.add(String.valueOf(element));
         }
         return joiner.toString();
     }
