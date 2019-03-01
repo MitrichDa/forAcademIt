@@ -31,7 +31,7 @@ public class MyArrayListTest {
         strings.add("c");
         strings.add("d");
         MyArrayList<String> strings2 = new MyArrayList<>(strings);
-        strings2.add("1");
+        strings2.add(null);
         System.out.println(strings2);
         strings2.ensureCapacity(20);
         System.out.println(strings2.addAll(strings));

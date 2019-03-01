@@ -288,7 +288,7 @@ public class MyArrayList<E> implements List<E> {
     public String toString() {
         StringJoiner joiner = new StringJoiner(", ", "[", "]");
         for (int i = 0; i < size; i++) {
-            joiner.add(items[i].toString());
+            joiner.add(String.valueOf(items[i]));
         }
         return joiner.toString();
     }
