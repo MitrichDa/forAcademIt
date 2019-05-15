@@ -3,6 +3,7 @@ package tk.dmitriikorenev.main;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.function.IntConsumer;
 
 public class Graph {
     public static void main(String[] args) {
@@ -25,18 +26,18 @@ public class Graph {
                 {0, 0, 0, 1, 1, 0, 0},
         };
 
-        traverseByBreadth(connectedGraph);
+        traverseByBreadth(connectedGraph, e -> System.out.println(e + 1 + " is visited"));
         System.out.println();
-        traverseByBreadth(disconnectedGraph);
+        traverseByBreadth(disconnectedGraph, e -> System.out.println(e + 1 + " is visited"));
         System.out.println();
 
-        traverseByDepth(connectedGraph);
+        traverseByDepth(connectedGraph, e -> System.out.println(e + 1 + " is visited"));
         System.out.println();
-        traverseByDepth(disconnectedGraph);
+        traverseByDepth(disconnectedGraph, e -> System.out.println(e + 1 + " is visited"));
         System.out.println();
     }
 
-    public static void traverseByBreadth(int[][] graph) {
+    public static void traverseByBreadth(int[][] graph, IntConsumer consumer) {
         boolean[] visited = new boolean[graph.length];
 
         Queue<Integer> queue = new LinkedList<>();
@@ -46,21 +47,20 @@ public class Graph {
                 while (!queue.isEmpty()) {
                     int index = queue.remove();
                     if (!visited[index]) {
-                        System.out.println(index + 1 + " is now visited");
+                        visited[index] = true;
+                        consumer.accept(index);
                         for (int j = 0; j < graph.length; j++) {
                             if (graph[index][j] == 1) {
                                 queue.add(j);
                             }
-                            visited[index] = true;
                         }
                     }
                 }
-                System.out.println("Закончен обход компоненты связности.");
             }
         }
     }
 
-    public static void traverseByDepth(int[][] graph) {
+    public static void traverseByDepth(int[][] graph, IntConsumer consumer) {
         boolean[] visited = new boolean[graph.length];
 
         Deque<Integer> deque = new LinkedList<>();
@@ -70,16 +70,15 @@ public class Graph {
                 while (!deque.isEmpty()) {
                     int index = deque.removeLast();
                     if (!visited[index]) {
-                        System.out.println(index + 1 + " is now visited");
+                        consumer.accept(index);
+                        visited[index] = true;
                         for (int j = graph.length - 1; j >= 0; j--) {
                             if (graph[index][j] == 1) {
                                 deque.addLast(j);
                             }
-                            visited[index] = true;
                         }
                     }
                 }
-                System.out.println("Закончен обход компоненты связности.");
             }
         }
     }
