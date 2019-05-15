@@ -1,21 +1,48 @@
 package tk.dmitriikorenev.classes;
 
+import java.util.Comparator;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.function.Consumer;
 
-public class MyTree<T extends Comparable<? super T>> {
+public class MyTree<T> {
     private TreeNode root;
     private int size;
+    private final Comparator<? super T> comparator;
+
+    public MyTree(Comparator<? super T> comparator) {
+        root = null;
+        size = 0;
+        this.comparator = comparator;
+    }
 
     public MyTree() {
         root = null;
         size = 0;
+        comparator = null;
     }
 
     public int getSize() {
         return size;
+    }
+
+    @SuppressWarnings("unchecked")
+    private int compareData(T data1, T data2) {
+        if (data1 == null && data2 == null) {
+            return 0;
+        }
+
+        if (data1 == null) {
+            return -1;
+        }
+
+        if (data2 == null) {
+            return 1;
+        }
+
+        return comparator == null ? ((Comparable<? super T>) data1).compareTo(data2)
+                : comparator.compare(data1, data2);
     }
 
     public void add(T elementData) {
@@ -29,7 +56,7 @@ public class MyTree<T extends Comparable<? super T>> {
         TreeNode currentElement = root;
         TreeNode newElement = new TreeNode(elementData);
         while (true) {
-            if (newElement.data.compareTo(currentElement.data) < 0) {
+            if (compareData(newElement.data, currentElement.data) < 0) {
                 if (currentElement.leftChild != null) {
                     currentElement = currentElement.leftChild;
                 } else {
@@ -48,9 +75,9 @@ public class MyTree<T extends Comparable<? super T>> {
     private TreeNode findNode(T data) {
         TreeNode currentElement = root;
         while (currentElement != null) {
-            if (data.compareTo(currentElement.data) < 0) {
+            if (compareData(data, currentElement.data) < 0) {
                 currentElement = currentElement.leftChild;
-            } else if (data.compareTo(currentElement.data) > 0) {
+            } else if (compareData(data, currentElement.data) > 0) {
                 currentElement = currentElement.rightChild;
             } else {
                 return currentElement;
@@ -67,9 +94,9 @@ public class MyTree<T extends Comparable<? super T>> {
         TreeNode parentNode = root;
         TreeNode currentNode = root;
         boolean isLeftChild = true;
-        while (!currentNode.data.equals(data)) {
+        while (compareData(currentNode.data, data) != 0) {
             parentNode = currentNode;
-            if (data.compareTo(parentNode.data) < 0) {
+            if (compareData(data, parentNode.data) < 0) {
                 currentNode = parentNode.leftChild;
                 isLeftChild = true;
             } else {
@@ -150,6 +177,7 @@ public class MyTree<T extends Comparable<? super T>> {
         while (!queue.isEmpty()) {
             TreeNode element = queue.remove();
             consumer.accept(element.data);
+
             if (element.leftChild != null) {
                 queue.add(element.leftChild);
             }
@@ -164,17 +192,18 @@ public class MyTree<T extends Comparable<? super T>> {
             return;
         }
 
-        Deque<TreeNode> queue = new LinkedList<>();
-        queue.addFirst(root);
+        Deque<TreeNode> stack = new LinkedList<>();
+        stack.addFirst(root);
 
-        while (!queue.isEmpty()) {
-            TreeNode element = queue.removeFirst();
+        while (!stack.isEmpty()) {
+            TreeNode element = stack.removeFirst();
             consumer.accept(element.data);
+
             if (element.rightChild != null) {
-                queue.addFirst(element.rightChild);
+                stack.addFirst(element.rightChild);
             }
             if (element.leftChild != null) {
-                queue.addFirst(element.leftChild);
+                stack.addFirst(element.leftChild);
             }
         }
     }
