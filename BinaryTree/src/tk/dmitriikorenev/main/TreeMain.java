@@ -22,39 +22,51 @@ public class TreeMain {
         tree.add(93);
 
         System.out.println("Обход в ширину:");
-        tree.traverseByBreadth((e) -> System.out.print(e + " "));
+        tree.traverseByBreadth(e -> System.out.print(e + " "));
         System.out.println();
 
         System.out.println("Обход в глубину:");
-        tree.traverseByDepth((e) -> System.out.print(e + " "));
+        tree.traverseByDepth(e -> System.out.print(e + " "));
         System.out.println();
 
         System.out.println("Обход в глубину с рекурсией:");
-        tree.traverseByDepthRecursive((e) -> System.out.print(e + " "));
+        tree.traverseByDepthRecursive(e -> System.out.print(e + " "));
         System.out.println();
 
         System.out.println("Размер: " + tree.getSize());
-        System.out.println("Ищем 6: " + tree.haveElement(6));
+        System.out.println("Ищем 6: " + tree.containsElement(6));
         System.out.println("Удаляем 6: " + tree.removeElement(6));
-        System.out.println("Ищем 6: " + tree.haveElement(6));
+        System.out.println("Ищем 6: " + tree.containsElement(6));
         System.out.println("Размер: " + tree.getSize());
         System.out.println("Обход в ширину:");
-        tree.traverseByBreadth((e) -> System.out.print(e + " "));
+        tree.traverseByBreadth(e -> System.out.print(e + " "));
         System.out.println();
 
         System.out.println("Удаляем 12: " + tree.removeElement(12));
         System.out.println("Обход в ширину:");
-        tree.traverseByBreadth((e) -> System.out.print(e + " "));
+        tree.traverseByBreadth(e -> System.out.print(e + " "));
         System.out.println();
 
         System.out.println("Удаляем 75: " + tree.removeElement(75));
         System.out.println("Обход в ширину:");
-        tree.traverseByBreadth((e) -> System.out.print(e + " "));
+        tree.traverseByBreadth(e -> System.out.print(e + " "));
         System.out.println();
 
         System.out.println("Удаляем 50: " + tree.removeElement(50));
         System.out.println("Обход в ширину:");
-        tree.traverseByBreadth((e) -> System.out.print(e + " "));
+        tree.traverseByBreadth(e -> System.out.print(e + " "));
         System.out.println();
+
+        MyTree<Integer> tree1 = new MyTree<>();
+        tree1.add(10);
+        tree1.add(1);
+        tree1.add(20);
+        tree1.add(15);
+        tree1.add(25);
+        tree1.traverseByBreadth(e -> System.out.print(e + " "));
+        System.out.println();
+
+        tree1.removeElement(20);
+        tree1.traverseByBreadth(e -> System.out.print(e + " "));
     }
 }

@@ -75,9 +75,10 @@ public class MyTree<T> {
     private TreeNode findNode(T data) {
         TreeNode currentElement = root;
         while (currentElement != null) {
-            if (compareData(data, currentElement.data) < 0) {
+            int comparison = compareData(data, currentElement.data);
+            if (comparison < 0) {
                 currentElement = currentElement.leftChild;
-            } else if (compareData(data, currentElement.data) > 0) {
+            } else if (comparison > 0) {
                 currentElement = currentElement.rightChild;
             } else {
                 return currentElement;
@@ -86,17 +87,22 @@ public class MyTree<T> {
         return null;
     }
 
-    public boolean haveElement(T data) {
+    public boolean containsElement(T data) {
         return findNode(data) != null;
     }
 
     public boolean removeElement(T data) {
-        TreeNode parentNode = root;
+        if (size == 0) {
+            return false;
+        }
+
+        TreeNode parentNode = null;
         TreeNode currentNode = root;
         boolean isLeftChild = true;
-        while (compareData(currentNode.data, data) != 0) {
+        int comparison = compareData(currentNode.data, data);
+        while (comparison != 0) {
             parentNode = currentNode;
-            if (compareData(data, parentNode.data) < 0) {
+            if (comparison > 0) {
                 currentNode = parentNode.leftChild;
                 isLeftChild = true;
             } else {
@@ -106,6 +112,7 @@ public class MyTree<T> {
             if (currentNode == null) {
                 return false;
             }
+            comparison = compareData(currentNode.data, data);
         }
 
         --size;
@@ -158,10 +165,10 @@ public class MyTree<T> {
             currentElement = currentElement.leftChild;
         }
 
+        replacementElement.leftChild = nodeToDelete.leftChild;
         if (replacementElement != nodeToDelete.rightChild) {
             replacementElementParent.leftChild = replacementElement.rightChild;
             replacementElement.rightChild = nodeToDelete.rightChild;
-            replacementElement.leftChild = nodeToDelete.leftChild;
         }
         return replacementElement;
     }
