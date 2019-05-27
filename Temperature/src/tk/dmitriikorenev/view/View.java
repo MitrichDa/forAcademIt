@@ -1,8 +1,11 @@
 package tk.dmitriikorenev.view;
 
-import tk.dmitriikorenev.enums.DegreesType;
 import tk.dmitriikorenev.exceptions.InvalidTemperatureException;
 import tk.dmitriikorenev.model.Model;
+import tk.dmitriikorenev.model.converters.CelsiusTemperatureConverter;
+import tk.dmitriikorenev.model.converters.FahrenheitTemperatureConverter;
+import tk.dmitriikorenev.model.converters.KelvinTemperatureConverter;
+import tk.dmitriikorenev.model.converters.TemperatureConverter;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -14,8 +17,6 @@ public class View {
 
     private JTextField inputField;
     private JTextField outputField;
-    private DegreesType fromType = DegreesType.CELSIUS;
-    private DegreesType toType = DegreesType.CELSIUS;
 
     public View(Model model) {
         this.model = model;
@@ -34,6 +35,9 @@ public class View {
         frame.getContentPane().add(BorderLayout.NORTH, inputPanel);
         frame.getContentPane().add(BorderLayout.CENTER, conversionTypesPanel);
         frame.getContentPane().add(BorderLayout.SOUTH, resultPanel);
+
+        initModel();
+
         frame.setVisible(true);
     }
 
@@ -63,11 +67,9 @@ public class View {
         JRadioButton fahrenheitButton = new JRadioButton("F");
         JRadioButton kelvinButton = new JRadioButton("K");
 
-        ActionListener radioButtonListener = getRadioButtonListener(celsiusButton, kelvinButton, fahrenheitButton, isFrom);
-
-        celsiusButton.addActionListener(radioButtonListener);
-        fahrenheitButton.addActionListener(radioButtonListener);
-        kelvinButton.addActionListener(radioButtonListener);
+        celsiusButton.addActionListener(getRadioButtonListener(CelsiusTemperatureConverter.getInstance(), isFrom));
+        fahrenheitButton.addActionListener(getRadioButtonListener(FahrenheitTemperatureConverter.getInstance(), isFrom));
+        kelvinButton.addActionListener(getRadioButtonListener(KelvinTemperatureConverter.getInstance(), isFrom));
 
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(celsiusButton);
@@ -93,7 +95,7 @@ public class View {
 
         transfer.addActionListener((event) -> {
             try {
-                String result = model.convertTemperature(inputField.getText(), fromType, toType);
+                String result = model.convertTemperature(inputField.getText());
                 outputField.setText(result);
             } catch (InvalidTemperatureException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage());
@@ -110,29 +112,20 @@ public class View {
         return resultPanel;
     }
 
-    private ActionListener getRadioButtonListener(JRadioButton celsiusButton, JRadioButton kelvinButton, JRadioButton fahrenheitButton, boolean isFrom) {
+    private void initModel() {
+        model.setFromKelvinConverter(CelsiusTemperatureConverter.getInstance());
+        model.setToKelvinConverter(CelsiusTemperatureConverter.getInstance());
+        model.setValidator(CelsiusTemperatureConverter.getInstance());
+    }
+
+    private ActionListener getRadioButtonListener(TemperatureConverter converter, boolean isFrom) {
         if (isFrom) {
             return (event) -> {
-                JRadioButton button = (JRadioButton) event.getSource();
-                if (button == celsiusButton) {
-                    fromType = DegreesType.CELSIUS;
-                } else if (button == kelvinButton) {
-                    fromType = DegreesType.KELVIN;
-                } else if (button == fahrenheitButton) {
-                    fromType = DegreesType.FAHRENHEIT;
-                }
+                model.setToKelvinConverter(converter);
+                model.setValidator(converter);
             };
         } else {
-            return (event) -> {
-                JRadioButton button = (JRadioButton) event.getSource();
-                if (button == celsiusButton) {
-                    toType = DegreesType.CELSIUS;
-                } else if (button == kelvinButton) {
-                    toType = DegreesType.KELVIN;
-                } else if (button == fahrenheitButton) {
-                    toType = DegreesType.FAHRENHEIT;
-                }
-            };
+            return (event) -> model.setFromKelvinConverter(converter);
         }
     }
 }
