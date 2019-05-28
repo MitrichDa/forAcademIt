@@ -9,9 +9,9 @@ public class KelvinTemperatureConverter implements TemperatureConverter {
     }
 
     public static KelvinTemperatureConverter getInstance() {
-        if (converter == null)
+        if (converter == null) {
             converter = new KelvinTemperatureConverter();
-
+        }
         return converter;
     }
 
@@ -26,11 +26,10 @@ public class KelvinTemperatureConverter implements TemperatureConverter {
     }
 
     @Override
-    public double validateInput(String stringValue) {
-        double value = Double.parseDouble(stringValue);
-        if (value < 0) {
+    public double validateInput(double inputValue) {
+        if (inputValue < 0) {
             throw new InvalidTemperatureException("Неверная температура в градусах Кельвина");
         }
-        return value;
+        return inputValue;
     }
 }

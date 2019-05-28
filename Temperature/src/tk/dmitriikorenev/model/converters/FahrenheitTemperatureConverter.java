@@ -12,9 +12,9 @@ public class FahrenheitTemperatureConverter implements TemperatureConverter {
     }
 
     public static FahrenheitTemperatureConverter getInstance() {
-        if (converter == null)
+        if (converter == null) {
             converter = new FahrenheitTemperatureConverter();
-
+        }
         return converter;
     }
 
@@ -29,11 +29,10 @@ public class FahrenheitTemperatureConverter implements TemperatureConverter {
     }
 
     @Override
-    public double validateInput(String stringValue) {
-        double value = Double.parseDouble(stringValue);
-        if (value < -KELVIN_TO_FAHRENHEIT1) {
+    public double validateInput(double inputValue) {
+        if (inputValue < -KELVIN_TO_FAHRENHEIT1) {
             throw new InvalidTemperatureException("Неверная температура в градусах Фаренгейта");
         }
-        return value;
+        return inputValue;
     }
 }

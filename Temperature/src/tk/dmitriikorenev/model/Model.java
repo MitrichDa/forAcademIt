@@ -1,12 +1,12 @@
 package tk.dmitriikorenev.model;
 
-import tk.dmitriikorenev.model.converters.StringValidator;
+import tk.dmitriikorenev.model.converters.Validator;
 import tk.dmitriikorenev.model.converters.TemperatureConverter;
 
 public class Model {
     private TemperatureConverter toKelvinConverter;
     private TemperatureConverter fromKelvinConverter;
-    private StringValidator validator;
+    private Validator validator;
 
     public TemperatureConverter getToKelvinConverter() {
         return toKelvinConverter;
@@ -24,19 +24,18 @@ public class Model {
         this.fromKelvinConverter = fromKelvinConverter;
     }
 
-    public StringValidator getValidator() {
+    public Validator getValidator() {
         return validator;
     }
 
-    public void setValidator(StringValidator validator) {
+    public void setValidator(Validator validator) {
         this.validator = validator;
     }
 
-    public String convertTemperature(String inputValue) {
+    public double convertTemperature(double inputValue) {
         double degrees = validator.validateInput(inputValue);
         degrees = toKelvinConverter.convertToKelvin(degrees);
         degrees = fromKelvinConverter.convertFromKelvin(degrees);
-        return String.format("%.2f", degrees);
-
+        return degrees;
     }
 }

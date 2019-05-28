@@ -20,12 +20,14 @@ public class View {
 
     public View(Model model) {
         this.model = model;
+        SwingUtilities.invokeLater(this::init);
     }
 
-    public void init() {
+    private void init() {
         JFrame frame = new JFrame("Temperature");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(250, 220);
+        frame.setResizable(false);
         frame.setLocationRelativeTo(null);
 
         JPanel inputPanel = getInputPanel();
@@ -91,16 +93,18 @@ public class View {
 
     private JPanel getResultPanel() {
         JPanel resultPanel = new JPanel();
-        JButton transfer = new JButton("перевести");
+        JButton transfer = new JButton("Перевести");
 
         transfer.addActionListener((event) -> {
             try {
-                String result = model.convertTemperature(inputField.getText());
+                double valueToConvert = Double.parseDouble(inputField.getText());
+                double convertedValue = model.convertTemperature(valueToConvert);
+                String result = String.format("%.2f", convertedValue);
                 outputField.setText(result);
-            } catch (InvalidTemperatureException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage());
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Введите корректное значение");
+            } catch (InvalidTemperatureException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage());
             }
         });
 

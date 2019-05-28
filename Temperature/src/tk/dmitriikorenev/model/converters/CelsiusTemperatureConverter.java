@@ -11,9 +11,9 @@ public class CelsiusTemperatureConverter implements TemperatureConverter {
     }
 
     public static CelsiusTemperatureConverter getInstance() {
-        if (converter == null)
+        if (converter == null) {
             converter = new CelsiusTemperatureConverter();
-
+        }
         return converter;
     }
 
@@ -28,11 +28,10 @@ public class CelsiusTemperatureConverter implements TemperatureConverter {
     }
 
     @Override
-    public double validateInput(String stringValue) {
-        double value = Double.parseDouble(stringValue);
-        if (value < -CELSIUS_TO_KELVIN) {
+    public double validateInput(double inputValue) {
+        if (inputValue < -CELSIUS_TO_KELVIN) {
             throw new InvalidTemperatureException("Неверная температура в градусах Цельсия");
         }
-        return value;
+        return inputValue;
     }
 }
